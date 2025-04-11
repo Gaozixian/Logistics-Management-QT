@@ -1,0 +1,570 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QT物流管理系统 | 专业物流解决方案</title>
+    <style>
+        :root {
+            --primary: #4361ee;
+            --secondary: #3f37c9;
+            --accent: #4895ef;
+            --light: #f8f9fa;
+            --dark: #212529;
+            --success: #4cc9f0;
+            --warning: #f72585;
+            --glass: rgba(255, 255, 255, 0.15);
+            --shadow: 0 8px 32px rgba(31, 38, 135, 0.1);
+            --border-radius: 12px;
+            --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #e4e8f0 100%);
+            color: var(--dark);
+            line-height: 1.6;
+            padding: 0;
+            margin: 0;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 3rem;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInUp 0.6s ease-out forwards;
+        }
+
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 1rem;
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            display: inline-block;
+        }
+
+        .subtitle {
+            font-size: 1.1rem;
+            color: #6c757d;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .card {
+            background: var(--glass);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            padding: 2rem;
+            margin-bottom: 2rem;
+            transition: var(--transition);
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            opacity: 0;
+            transform: translateY(20px);
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 40px rgba(31, 38, 135, 0.15);
+        }
+
+        .card:nth-child(1) {
+            animation: fadeInUp 0.6s ease-out 0.1s forwards;
+        }
+        .card:nth-child(2) {
+            animation: fadeInUp 0.6s ease-out 0.2s forwards;
+        }
+        .card:nth-child(3) {
+            animation: fadeInUp 0.6s ease-out 0.3s forwards;
+        }
+        .card:nth-child(4) {
+            animation: fadeInUp 0.6s ease-out 0.4s forwards;
+        }
+        .card:nth-child(5) {
+            animation: fadeInUp 0.6s ease-out 0.5s forwards;
+        }
+
+        h2 {
+            font-size: 1.8rem;
+            margin-bottom: 1.5rem;
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+        }
+
+        h2::before {
+            content: "";
+            display: inline-block;
+            width: 8px;
+            height: 24px;
+            background: linear-gradient(to bottom, var(--primary), var(--accent));
+            margin-right: 12px;
+            border-radius: 4px;
+        }
+
+        h3 {
+            font-size: 1.3rem;
+            margin: 1.5rem 0 1rem;
+            color: var(--secondary);
+            position: relative;
+            padding-left: 1rem;
+        }
+
+        h3::before {
+            content: "";
+            position: absolute;
+            left: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 4px;
+            height: 16px;
+            background-color: var(--accent);
+            border-radius: 2px;
+        }
+
+        p, li {
+            margin-bottom: 0.8rem;
+            color: #495057;
+        }
+
+        ul, ol {
+            padding-left: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        li {
+            margin-bottom: 0.5rem;
+            position: relative;
+        }
+
+        .feature-list li::before {
+            content: "✓";
+            color: var(--success);
+            font-weight: bold;
+            display: inline-block;
+            width: 1.5em;
+            margin-left: -1.5em;
+        }
+
+        .highlight {
+            background-color: rgba(72, 149, 239, 0.1);
+            padding: 0.2em 0.4em;
+            border-radius: 4px;
+            font-family: 'Courier New', monospace;
+            color: var(--secondary);
+        }
+
+        .table-container {
+            overflow-x: auto;
+            margin: 2rem 0;
+            border-radius: var(--border-radius);
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.05);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background-color: white;
+            border-radius: var(--border-radius);
+            overflow: hidden;
+        }
+
+        th, td {
+            padding: 1rem;
+            text-align: left;
+            border-bottom: 1px solid #e9ecef;
+        }
+
+        th {
+            background-color: var(--primary);
+            color: white;
+            font-weight: 600;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f8f9fa;
+        }
+
+        tr:hover {
+            background-color: #e9f5ff;
+        }
+
+        .code-block {
+            background-color: #2b2d42;
+            color: #f8f9fa;
+            padding: 1.5rem;
+            border-radius: var(--border-radius);
+            font-family: 'Courier New', monospace;
+            margin: 1.5rem 0;
+            overflow-x: auto;
+            position: relative;
+        }
+
+        .code-block::before {
+            content: "C++";
+            position: absolute;
+            top: 0;
+            right: 0;
+            background-color: var(--primary);
+            color: white;
+            padding: 0.2rem 0.8rem;
+            border-bottom-left-radius: var(--border-radius);
+            font-size: 0.8rem;
+        }
+
+        .tag {
+            display: inline-block;
+            background-color: var(--light);
+            color: var(--dark);
+            padding: 0.2rem 0.6rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            margin-right: 0.5rem;
+            margin-bottom: 0.5rem;
+            border: 1px solid #dee2e6;
+        }
+
+        .tag-primary {
+            background-color: rgba(67, 97, 238, 0.1);
+            color: var(--primary);
+            border-color: rgba(67, 97, 238, 0.2);
+        }
+
+        .tag-secondary {
+            background-color: rgba(63, 55, 201, 0.1);
+            color: var(--secondary);
+            border-color: rgba(63, 55, 201, 0.2);
+        }
+
+        .tag-accent {
+            background-color: rgba(72, 149, 239, 0.1);
+            color: var(--accent);
+            border-color: rgba(72, 149, 239, 0.2);
+        }
+
+        .icon {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 36px;
+            height: 36px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            border-radius: 50%;
+            margin-right: 12px;
+            font-size: 18px;
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 4rem;
+            padding: 2rem 0;
+            color: #6c757d;
+            font-size: 0.9rem;
+            border-top: 1px solid #e9ecef;
+        }
+
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .feature-item {
+            background: white;
+            border-radius: var(--border-radius);
+            padding: 1.5rem;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+            transition: var(--transition);
+        }
+
+        .feature-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+        }
+
+        .feature-icon {
+            font-size: 2rem;
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+
+        .status-indicator {
+            display: inline-block;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            margin-right: 8px;
+        }
+
+        .status-pending {
+            background-color: #ffbe0b;
+        }
+
+        .status-shipping {
+            background-color: #3a86ff;
+        }
+
+        .status-delivered {
+            background-color: #38b000;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 1rem;
+            }
+            
+            h1 {
+                font-size: 2rem;
+            }
+            
+            .feature-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .card {
+                padding: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>
+                <span class="icon">🚚</span>
+                QT物流管理系统
+            </h1>
+            <p class="subtitle">基于Qt框架开发的现代化物流管理解决方案，提供高效、可靠的订单管理与追踪功能</p>
+        </header>
+
+        <div class="card">
+            <h2>核心功能概述</h2>
+            <p>这是一个基于 <span class="highlight">Qt框架</span> 开发的物流管理桌面应用，使用 <span class="highlight">SQLite</span> 嵌入式数据库存储数据，主要功能包括：</p>
+            
+            <div class="feature-grid">
+                <div class="feature-item">
+                    <div class="feature-icon">📦</div>
+                    <h3>订单管理</h3>
+                    <p>完整的增删改查功能，支持多条件筛选和排序</p>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon">📑</div>
+                    <h3>多标签页界面</h3>
+                    <p>订单管理/新建订单/订单操作分页处理，提高工作效率</p>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon">💾</div>
+                    <h3>数据库管理</h3>
+                    <p>支持数据库文件自由切换，自动检测表结构完整性</p>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon">📊</div>
+                    <h3>可视化表格</h3>
+                    <p>使用QTableView展示数据，支持自定义列和排序</p>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon">🔄</div>
+                    <h3>状态流转</h3>
+                    <p>订单状态自动流转：待发货→运输中→已送达</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2>详细功能说明</h2>
+            
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>功能模块</th>
+                            <th>实现细节</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>订单管理</strong></td>
+                            <td>
+                                <ul class="feature-list">
+                                    <li>表格展示所有订单（ID/客户/目的地/重量/状态等）</li>
+                                    <li>支持点击查看详情</li>
+                                    <li>自动刷新数据</li>
+                                </ul>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><strong>订单搜索</strong></td>
+                            <td>
+                                <ul class="feature-list">
+                                    <li>支持按客户名、目的地、订单号模糊搜索</li>
+                                    <li>实时刷新搜索结果</li>
+                                </ul>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><strong>新建订单</strong></td>
+                            <td>
+                                <ul class="feature-list">
+                                    <li>表单验证（必填字段检查）</li>
+                                    <li>重量/体积数值输入控件（QDoubleSpinBox）</li>
+                                </ul>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><strong>订单操作</strong></td>
+                            <td>
+                                <ul class="feature-list">
+                                    <li>删除订单（二次确认）</li>
+                                    <li>状态更新（三态自动流转）</li>
+                                </ul>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><strong>数据库管理</strong></td>
+                            <td>
+                                <ul class="feature-list">
+                                    <li>默认使用<code>logistics.db</code></li>
+                                    <li>支持打开外部SQLite文件</li>
+                                    <li>自动检测表结构完整性</li>
+                                </ul>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><strong>用户界面</strong></td>
+                            <td>
+                                <ul class="feature-list">
+                                    <li>响应式布局（QGridLayout/QHBoxLayout/QVBoxLayout）</li>
+                                    <li>状态栏显示操作反馈</li>
+                                </ul>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2>技术实现亮点</h2>
+            
+            <h3>数据持久化</h3>
+            <ul>
+                <li>使用SQLite嵌入式数据库，单文件便携存储</li>
+                <li>预处理SQL语句防止注入攻击</li>
+            </ul>
+            
+            <div class="code-block">
+                query.prepare("INSERT INTO orders (...) VALUES (?, ?, ?)");
+            </div>
+            
+            <h3>模型-视图架构</h3>
+            <ul>
+                <li><span class="highlight">QStandardItemModel</span> + <span class="highlight">QTableView</span> 实现数据绑定</li>
+                <li>自定义<span class="highlight">refreshOrderTable()</span>保持数据一致性</li>
+            </ul>
+            
+            <h3>交互设计</h3>
+            <ul>
+                <li>删除订单前弹出确认对话框</li>
+                <div class="code-block">
+                    QMessageBox::question(this, "确认删除", "确定删除订单吗？");
+                </div>
+                <li>状态变更后自动更新时间戳</li>
+            </ul>
+            
+            <h3>异常处理</h3>
+            <ul>
+                <li>数据库错误捕获并友好提示</li>
+                <div class="code-block">
+                    QMessageBox::critical(this, "错误", db.lastError().text());
+                </div>
+            </ul>
+        </div>
+
+        <div class="card">
+            <h2>部门下一步功能开发（可选）</h2>
+            <p>如需增强系统，可考虑以下扩展功能：</p>
+            
+            <div class="feature-grid">
+                <div class="feature-item">
+                    <div class="feature-icon">📤</div>
+                    <h3>数据导出</h3>
+                    <p>导出订单为Excel/PDF格式</p>
+                    <span class="tag tag-primary">报表</span>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon">🔐</div>
+                    <h3>用户登录</h3>
+                    <p>多角色权限控制系统</p>
+                    <span class="tag tag-secondary">安全</span>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon">🌐</div>
+                    <h3>网络同步</h3>
+                    <p>连接远程MySQL数据库</p>
+                    <span class="tag tag-accent">云端</span>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon">📈</div>
+                    <h3>统计图表</h3>
+                    <p>使用QtCharts展示运输量趋势</p>
+                    <span class="tag tag-primary">可视化</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2>运行要求</h2>
+            <ul>
+                <li><strong>开发环境</strong>: Qt 5.15+ / Qt 6.x</li>
+                <li><strong>编译工具</strong>: MinGW/MSVC</li>
+                <li><strong>依赖库</strong>: QtSql、QtWidgets</li>
+                <li><strong>部署方式</strong>: 单可执行文件+数据库文件</li>
+            </ul>
+            
+            <h3>使用示例</h3>
+            <div class="code-block">
+                1. 启动程序 → 自动加载logistics_default.db
+                2. [新建订单] 填写客户/目的地信息 → 点击"添加订单"
+                3. [订单管理] 双击表格行查看详情 → 点击"更新状态"
+                4. [文件菜单] 可切换其他数据库文件
+            </div>
+            
+            <p style="margin-top: 1.5rem;">如果需要补充其他功能或调整现有逻辑，请随时告知！</p>
+        </div>
+    </div>
+
+    <div class="footer">
+        
+        <p>最后更新时间为2025-04-11，星期五</p>
+        
+    </div>
+</body>
+</html>
