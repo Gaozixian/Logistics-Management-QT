@@ -16,7 +16,8 @@
 
 ### 客户订单删除和更新界面如下
 ![示例图片](img/update_delete.png)
-
+### 视频介绍
+https://www.bilibili.com/video/BV1mqddYnErx/
 ### 软件版本说明
 
 版本说明：QMake version 3.1     Using Qt version 6.8.3 in C:/Qt/6.8.3/mingw_64/lib
